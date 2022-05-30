@@ -8,7 +8,7 @@ import org.springframework.data.neo4j.core.schema.Relationship
 @Node("DeviceGroup")
 data class DeviceGroup(
     @Id
-    val id: Long?,
+    override val id: Long?,
 
     @Property
     override val name: String,
