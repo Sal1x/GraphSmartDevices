@@ -12,7 +12,6 @@ data class LocationDTO(
 ) {
     companion object FromLocation {
         fun fromLocation(location: Location): LocationDTO {
-            println(location.member)
             val members: List<Any?> = location.member.stream().map {
                 when (it) {
                     is DeviceGroup -> DeviceGroupDTO.fromDeviceGroupWithoutMembers(it)

@@ -27,7 +27,9 @@ class NeoService {
 
     fun getDeviceInfo(name: String): Mono<Device> = deviceRepo.findDeviceByName(name)
 
-    fun getLocation(): Flux<Location> = locationRepo.findAll()
+    fun getLocations(): Flux<Location> = locationRepo.findAll()
+
+    fun getLocation(name: String): Mono<Location> = locationRepo.findByName(name = name)
 
     fun getDeviceGroup(): Flux<DeviceGroup> = deviceGroupRepo.findAll()
 }

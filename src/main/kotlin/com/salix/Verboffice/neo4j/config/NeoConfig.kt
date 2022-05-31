@@ -12,10 +12,8 @@ import org.springframework.transaction.ReactiveTransactionManager
 class NeoConfig {
 
     @Bean(ReactiveNeo4jRepositoryConfigurationExtension.DEFAULT_TRANSACTION_MANAGER_BEAN_NAME)
-    fun reactiveTransactionManager(
-        driver: Driver?,
-        databaseNameProvider: ReactiveDatabaseSelectionProvider?
-    ): ReactiveTransactionManager? {
+    fun reactiveTransactionManager(driver: Driver?, databaseNameProvider: ReactiveDatabaseSelectionProvider?)
+            : ReactiveTransactionManager? {
         return driver?.let { ReactiveNeo4jTransactionManager(it, databaseNameProvider!!) }
     }
 }

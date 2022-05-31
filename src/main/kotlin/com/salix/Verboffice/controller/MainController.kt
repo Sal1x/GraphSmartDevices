@@ -25,13 +25,13 @@ class MainController {
     fun getItems(): Flux<DeviceDTO> = neoService.getDevices().map { DeviceDTO.fromDevice(it) }
 
     @GetMapping("/items/{itemName}")
-    fun getItemInfo(@PathVariable("itemName") itemName: String): Mono<DeviceDTO> =
-        neoService.getDeviceInfo(itemName).map { DeviceDTO.fromDevice(it) }
-
+    fun getItemInfo(@PathVariable("itemName") itemName: String): Mono<DeviceDTO> {
+        return neoService.getDeviceInfo(itemName).map { DeviceDTO.fromDevice(it) }
+    }
     @GetMapping("/locations")
-    fun getLocation(): Flux<LocationDTO> = neoService.getLocation().map { LocationDTO.fromLocation(it) }
-//    fun getLocation(): Flux<Location> = neoService.getLocation()
+    fun getLocation(): Flux<LocationDTO> = neoService.getLocations().map { LocationDTO.fromLocation(it) }
 
-//    @GetMapping("/locations/{itemName}")
-//    @PutMapping("/lights")
+    @GetMapping("/locations/{locationName}")
+    fun getLocation(@PathVariable("locationName") locationName: String): Mono<LocationDTO> =
+        neoService.getLocation(locationName).map { LocationDTO.fromLocation(it) }
 }
