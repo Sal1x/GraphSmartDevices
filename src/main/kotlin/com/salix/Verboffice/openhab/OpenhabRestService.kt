@@ -1,5 +1,6 @@
 package com.salix.Verboffice.openhab
 
+import com.salix.Verboffice.openhab.domain.Event
 import com.salix.Verboffice.openhab.domain.Item
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -15,7 +16,7 @@ class OpenhabRestService(
     val webClient: WebClient.Builder
 ) {
 
-    fun getItems(): Flux<Item>? {
+    fun getItems(): Flux<Item> {
         return webClient.build()
             .get()
             .uri("https://demo.openhab.org/rest/items?tags=light")
@@ -31,6 +32,16 @@ class OpenhabRestService(
             .accept(MediaType.APPLICATION_JSON)
             .retrieve()
             .bodyToMono(Item::class.java)
+    }
+
+    fun getEvents(): Flux<Event> {
+        return webClient.build()
+            .get()
+            .uri("https://demo.openhab.org/rest/events")
+            .accept(MediaType.TEXT_EVENT_STREAM)
+            .retrieve()
+            .bodyToFlux(String::class.java)
+            .map(Event::fromValue)
     }
 
 }

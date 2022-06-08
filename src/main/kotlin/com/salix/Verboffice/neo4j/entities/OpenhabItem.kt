@@ -6,5 +6,5 @@ import org.springframework.data.neo4j.core.schema.Node
 sealed interface OpenhabItem {
     val id: Long?
     val name: String
-    val group: Set<OpenhabItem>
+    val group: List<OpenhabItem>?
 }

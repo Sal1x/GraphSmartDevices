@@ -1,18 +1,14 @@
 package com.salix.Verboffice.openhab.domain
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import lombok.Data
-import lombok.NoArgsConstructor
 
-@Data
-@NoArgsConstructor
 data class Item(
     @JsonProperty("name")
     val name: String,
     @JsonProperty("type")
     val type: String,
     @JsonProperty("state")
-    val state: String?,
+    val state: String,
     @JsonProperty("label")
     val label: String?,
     @JsonProperty("editable")

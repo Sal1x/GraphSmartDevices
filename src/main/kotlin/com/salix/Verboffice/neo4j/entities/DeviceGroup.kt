@@ -8,17 +8,17 @@ import org.springframework.data.neo4j.core.schema.Relationship
 @Node("DeviceGroup")
 data class DeviceGroup(
     @Id
-    override val id: Long?,
+    override val id: Long? = null,
 
     @Property
     override val name: String,
 
     @Property
-    val label: String?,
+    val label: String? = null,
 
     @Relationship(value = "member", direction = Relationship.Direction.OUTGOING)
-    override val member: Set<OpenhabItem>,
+    override val member: List<OpenhabItem>? = null,
 
     @Relationship(value = "member", direction = Relationship.Direction.INCOMING)
-    override val group: Set<OpenhabItem>
+    override val group: List<OpenhabItem>? = null
 ) : OpenhabGroup

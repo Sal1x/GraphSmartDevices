@@ -9,10 +9,10 @@ import org.springframework.data.neo4j.core.schema.Property
 data class State(
     @Id
     @GeneratedValue
-    val id: Long?,
+    val id: Long? = null,
 
     @Property("value")
-    val value: String,
+    var value: String,
 
     @Property("type_")
     val type_: String

@@ -10,7 +10,7 @@ import org.springframework.data.neo4j.core.schema.Relationship
 data class Device(
     @Id
     @GeneratedValue
-    override val id: Long?,
+    override val id: Long? = null,
 
     @Property("name")
     override val name: String,
@@ -19,9 +19,9 @@ data class Device(
     val type_: String,
 
     @Relationship(type = "haveState", direction = Relationship.Direction.OUTGOING)
-    val state: Set<State>?,
+    val state: List<State>? = null,
 
-    @Relationship(type="member", direction = Relationship.Direction.INCOMING)
-    override val group: Set<OpenhabItem>
+    @Relationship(type = "member", direction = Relationship.Direction.INCOMING)
+    override val group: List<OpenhabItem>? = null
 
 ) : OpenhabItem

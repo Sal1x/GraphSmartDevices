@@ -2,7 +2,9 @@ package com.salix.Verboffice.controller
 
 import com.salix.Verboffice.openhab.domain.Item
 import com.salix.Verboffice.openhab.OpenhabService
+import com.salix.Verboffice.openhab.domain.Event
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -23,5 +25,14 @@ class OpenhabController(
     @GetMapping("/items/{name}")
     fun getOpenhabItems(@PathVariable("name") name: String): Mono<Item> {
         return openhabService.getItem(name)
+    }
+    @GetMapping("/events", produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
+    fun getEvents(): Flux<Event> {
+        return openhabService.getEvents()
+    }
+
+    @GetMapping("/events/state", produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
+    fun getChangeStateEvents(): Flux<Event> {
+        return openhabService.getChangeStateEvents()
     }
 }

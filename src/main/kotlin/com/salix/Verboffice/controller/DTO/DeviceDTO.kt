@@ -1,14 +1,19 @@
 package com.salix.Verboffice.controller.DTO
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.salix.Verboffice.neo4j.entities.Device
+import reactor.core.publisher.Mono
 
 data class DeviceDTO(
+    @JsonProperty("name")
     val name: String,
+    @JsonProperty("type_")
     val type_: String,
+    @JsonProperty("state")
     val state: StateDTO
 ) {
-    companion object FromDevice {
-        fun fromDevice(device: Device): DeviceDTO {
+    companion object {
+        fun fromValue(device: Device): DeviceDTO {
             return DeviceDTO(
                 name = device.name,
                 type_ = device.type_,
