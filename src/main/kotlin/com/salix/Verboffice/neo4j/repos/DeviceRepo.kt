@@ -5,7 +5,6 @@ import org.springframework.data.neo4j.repository.ReactiveNeo4jRepository
 import org.springframework.stereotype.Repository
 import reactor.core.publisher.Mono
 
-@Repository
 interface DeviceRepo: ReactiveNeo4jRepository<Device, Long> {
     fun findDeviceByName(name: String): Mono<Device>
 }

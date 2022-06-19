@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class VerbofficeApplication
+class GraphSmartDevicesApplication
 
 fun main(args: Array<String>) {
-	runApplication<VerbofficeApplication>(*args)
+	runApplication<GraphSmartDevicesApplication>(*args)
 }

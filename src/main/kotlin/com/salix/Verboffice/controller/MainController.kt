@@ -5,6 +5,7 @@ import com.salix.Verboffice.controller.DTO.LocationDTO
 import com.salix.Verboffice.neo4j.NeoService
 import com.salix.Verboffice.neo4j.entities.Device
 import com.salix.Verboffice.neo4j.entities.State
+import com.salix.Verboffice.neo4j.entities.StateRel
 import com.salix.Verboffice.openhab.OpenhabService
 import com.salix.Verboffice.openhab.domain.Item
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import reactor.util.function.Tuple2
+import java.time.Instant
+import java.util.*
 
 @RestController
 class MainController {
@@ -43,12 +47,22 @@ class MainController {
     @GetMapping("/import")
     fun importData(): Flux<DeviceDTO> {
         return openhabService.getItems()
-            .map(this::fromValue)
-            .map(neoService::saveDevice)
-            .concatMap{ it.map { device -> DeviceDTO.fromValue(device) }}
+            .filter { it.type != "Group" }
+            .map {
+                neoService.save(StateRel(State(value = it.state, type_ = it.type), since = Date.from(Instant.now()) ))
+                    .zipWith(neoService.save(fromValue(it)))
+            }
+            .map { it.map { param: Tuple2<StateRel, Device> -> neoService.combine(param.t2, param.t1) } }
+            .concatMap { it.map(neoService::save) }
+            .concatMap { it.map(DeviceDTO::fromValue) }
+            .log()
     }
 
     private fun fromValue(item: Item): Device {
         return Device(name = item.name, type_ = item.type)
     }
+
+//    private fun fromValue(item: Item): State{
+//        return State(value = item.state, type_=item.type)
+//    }
 }

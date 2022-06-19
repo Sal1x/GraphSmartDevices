@@ -1,27 +1,41 @@
 package com.salix.Verboffice.neo4j.entities
 
-import org.springframework.data.neo4j.core.schema.GeneratedValue
-import org.springframework.data.neo4j.core.schema.Id
-import org.springframework.data.neo4j.core.schema.Node
-import org.springframework.data.neo4j.core.schema.Property
-import org.springframework.data.neo4j.core.schema.Relationship
+import org.springframework.data.neo4j.core.schema.*
+import java.time.Instant
+import java.util.*
+import kotlin.collections.HashSet
+
 
 @Node("Device")
 data class Device(
-    @Id
-    @GeneratedValue
-    override val id: Long? = null,
+    @Property("name") override val name: String,
 
-    @Property("name")
-    override val name: String,
-
-    @Property("type_")
-    val type_: String,
+    @Property("type_") val type_: String,
 
     @Relationship(type = "haveState", direction = Relationship.Direction.OUTGOING)
-    val state: List<State>? = null,
+    var states: HashSet<StateRel>? = null,
 
     @Relationship(type = "member", direction = Relationship.Direction.INCOMING)
-    override val group: List<OpenhabItem>? = null
+    override val group: MutableList<OpenhabItem>? = null,
 
-) : OpenhabItem
+    @Id @GeneratedValue override val id: Long? = null
+
+) : OpenhabItem {
+    fun haveState(state: State) {
+        if (states == null) {
+            states = HashSet()
+        }
+        val stateRel = StateRel(state, since = Date.from(Instant.now()))
+        states!!.add(stateRel)
+        println(stateRel)
+    }
+
+    fun haveState(stateRel: StateRel) {
+        if (states == null) {
+            states = HashSet()
+        }
+        states!!.add(stateRel)
+        println(stateRel)
+
+    }
+}

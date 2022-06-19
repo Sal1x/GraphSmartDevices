@@ -2,7 +2,6 @@ package com.salix.Verboffice.controller.DTO
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.salix.Verboffice.neo4j.entities.Device
-import reactor.core.publisher.Mono
 
 data class DeviceDTO(
     @JsonProperty("name")
@@ -17,7 +16,7 @@ data class DeviceDTO(
             return DeviceDTO(
                 name = device.name,
                 type_ = device.type_,
-                state = StateDTO.fromState(device.state?.lastOrNull())
+                state = StateDTO.fromState(device.states)
             )
         }
     }

@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.salix</groupId>
-    <artifactId>Verboffice</artifactId>
+    <artifactId>GraphSmartDevices</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Verboffice</name>
+    <name>GraphSmartDevices</name>
     <description>pet project to connect with Neo4j and OpenHAB</description>
     <properties>
         <java.version>11</java.version>

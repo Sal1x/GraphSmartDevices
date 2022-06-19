@@ -7,13 +7,7 @@ import org.springframework.data.neo4j.core.schema.Property
 
 @Node("State")
 data class State(
-    @Id
-    @GeneratedValue
-    val id: Long? = null,
-
-    @Property("value")
-    var value: String,
-
-    @Property("type_")
-    val type_: String
+    @Property("value") var value: String,
+    @Property("type_") val type_: String,
+    @Id @GeneratedValue val id: Long? = null
 )
