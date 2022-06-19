@@ -49,13 +49,13 @@ class MainController {
         return openhabService.getItems()
             .filter { it.type != "Group" }
             .map {
-                neoService.save(StateRel(State(value = it.state, type_ = it.type), since = Date.from(Instant.now()) ))
+                neoService.save(State(it.state, it.type))
+                    .log()
                     .zipWith(neoService.save(fromValue(it)))
             }
-            .map { it.map { param: Tuple2<StateRel, Device> -> neoService.combine(param.t2, param.t1) } }
+            .map { it.map { param: Tuple2<State, Device> -> neoService.combine(param.t2, param.t1) } }
             .concatMap { it.map(neoService::save) }
             .concatMap { it.map(DeviceDTO::fromValue) }
-            .log()
     }
 
     private fun fromValue(item: Item): Device {

@@ -18,8 +18,8 @@ class NeoService {
     @Autowired
     lateinit var deviceGroupRepo: DeviceGroupRepo
 
-    @Autowired
-    lateinit var stateRelRepo: StateRelRepo
+//    @Autowired
+//    lateinit var stateRelRepo: StateRelRepo
 
     @Autowired
     lateinit var stateRepo: StateRepo
@@ -41,18 +41,24 @@ class NeoService {
     fun save(state: State): Mono<State> {
         return stateRepo.save(state)
     }
-    fun save(stateRel: StateRel): Mono<StateRel> {
-        return stateRelRepo.save(stateRel)
-    }
+//    fun save(stateRel: StateRel): Mono<StateRel> {
+//        return stateRelRepo.save(stateRel)
+//    }
 
     fun combine(device: Device, state: State): Device {
         device.haveState(state)
         return device
     }
 
-    fun combine(device: Device, stateRel: StateRel): Device {
-        device.haveState(stateRel)
-        return device
+//    fun combine(device: Device, stateRel: StateRel): Device {
+//        device.haveStateRel(stateRel)
+//        println(device.states!!.last())
+//        return device
+//    }
+
+    fun combine(stateRel: StateRel, state: State): StateRel {
+        stateRel.haveState(state)
+        return stateRel
     }
 
 

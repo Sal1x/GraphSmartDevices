@@ -27,15 +27,12 @@ data class Device(
         }
         val stateRel = StateRel(state, since = Date.from(Instant.now()))
         states!!.add(stateRel)
-        println(stateRel)
-    }
 
-    fun haveState(stateRel: StateRel) {
-        if (states == null) {
-            states = HashSet()
+        fun haveStateRel(stateRel: StateRel) {
+            if (states == null) {
+                states = HashSet()
+            }
+            states!!.add(stateRel)
         }
-        states!!.add(stateRel)
-        println(stateRel)
-
     }
 }

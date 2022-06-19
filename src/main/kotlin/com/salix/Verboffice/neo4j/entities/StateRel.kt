@@ -7,7 +7,11 @@ import java.util.Date
 
 @RelationshipProperties
 data class StateRel(
-    @TargetNode val state: State,
+    @TargetNode var state: State,
     @DateLong @CreatedDate val since: Date? = null,
     @RelationshipId val id: Long? = null
-)
+){
+    fun haveState(state: State){
+        this.state = state
+    }
+}
